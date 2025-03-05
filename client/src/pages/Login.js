@@ -10,32 +10,42 @@ const Login = () => {
     email: '',
     password: ''
   });
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Giả lập đăng nhập thành công
-    login({
-      id: '1',
-      name: 'Minh Anh',
-      email: formData.email,
-      avatar: '/images/avatars/default-avatar.jpg',
-      notifications: [
-        {
-          id: 1,
-          type: 'review',
-          message: 'Bài đánh giá của bạn đã được duyệt',
-          time: '2024-03-05T10:30:00Z',
-          read: false
-        }
-      ]
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+  
+  try {
+    const response = await fetch(`${API_URL}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
     });
-    navigate('/');
-  };
+
+    const data = await response.json();
+
+    if (response.ok) {
+      login(data);
+      navigate('/');
+    } else {
+      setError(data.message || 'Đăng nhập thất bại');
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    setError('Có lỗi xảy ra. Vui lòng thử lại sau.');
+  }
+};
 
   return (
     <div className="login-container">
       <div className="login-box">
         <h2>Đăng nhập</h2>
+        {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Email</label>

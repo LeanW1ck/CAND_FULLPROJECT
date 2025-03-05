@@ -18,6 +18,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 // Pages
 import Login from './pages/Login';
+import Register from './pages/Register';
 import RestaurantDashboard from './pages/RestaurantDashboard';
 
 const theme = createTheme({
@@ -53,11 +54,16 @@ function AppContent() {
       <Header />
       <main>
         <Routes>
-          <Route path="/" element={
-            !user ? <MainContent /> : <Navigate to="/dashboard" />
-          } />
+          <Route path="/" element={<MainContent />}/> 
+          
+          <Route 
+            path="/register" 
+            element={
+              user ? <Navigate to="/" /> : <Register />
+            } 
+          />
           <Route path="/login" element={
-            !user ? <Login /> : <Navigate to="/dashboard" />
+            !user ? <Login /> : <Navigate to="/login" />
           } />
           <Route path="/dashboard" element={
             <ProtectedRoute>
