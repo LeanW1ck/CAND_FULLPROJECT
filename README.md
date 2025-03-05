@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CAND_FullProject
 
 Dự án web sử dụng React.js cho Frontend và Node.js cho Backend.
@@ -49,3 +50,6 @@ npm start
 - Express.js
 - MongoDB
 - Mongoose
+=======
+# CAND_FULLPROJECT
+>>>>>>> f7e71bfb50d9c5d5e0bef5d917ef64e46ff404a0
