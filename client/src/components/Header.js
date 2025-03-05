@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLocation } from '../context/LocationContext';
 import '../styles/Header.css';
 
 const Header = () => {
+  const { currentLocation, locations, changeLocation } = useLocation();
+  const [isLocationOpen, setIsLocationOpen] = useState(false);
+
   return (
     <header className="header">
       <div className="header-container">
@@ -10,6 +14,34 @@ const Header = () => {
           <Link to="/">
             <h1>FoodReview</h1>
           </Link>
+        </div>
+
+        <div className="location-selector">
+          <button 
+            className="location-button"
+            onClick={() => setIsLocationOpen(!isLocationOpen)}
+          >
+            <i className="fas fa-map-marker-alt"></i>
+            {locations.find(loc => loc.id === currentLocation)?.name}
+            <i className="fas fa-chevron-down"></i>
+          </button>
+          
+          {isLocationOpen && (
+            <div className="location-dropdown">
+              {locations.map(location => (
+                <button
+                  key={location.id}
+                  className={`location-option ${currentLocation === location.id ? 'active' : ''}`}
+                  onClick={() => {
+                    changeLocation(location.id);
+                    setIsLocationOpen(false);
+                  }}
+                >
+                  {location.name}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
         
         <nav className="nav-menu">
