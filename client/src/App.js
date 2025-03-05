@@ -3,22 +3,23 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 
-// Pages
-import Home from './pages/Home';
-import NotFound from './pages/NotFound';
-
 // Components
-import Layout from './components/Layout';
+import Header from './components/Header';
+import Banner from './components/Banner';
+import FeaturedRestaurants from './components/FeaturedRestaurants';
 
 const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#1976d2',
+      main: '#e74c3c',
     },
     secondary: {
-      main: '#dc004e',
+      main: '#2ecc71',
     },
+  },
+  typography: {
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
   },
 });
 
@@ -27,12 +28,20 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Layout>
+        <div className="App">
+          <Header />
+          <main>
+            <Routes>
+              <Route path="/" element={
+                <>
+                  <Banner />
+                  <FeaturedRestaurants />
+                </>
+              } />
+              {/* Add more routes here */}
+            </Routes>
+          </main>
+        </div>
       </Router>
     </ThemeProvider>
   );
